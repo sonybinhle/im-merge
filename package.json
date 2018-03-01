@@ -1,6 +1,6 @@
 {
   "name": "im-merge",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "The immutable merge util",
   "main": "src/imMerge.js",
   "repository": "https://github.com/sonybinhle/im-merge.git",
