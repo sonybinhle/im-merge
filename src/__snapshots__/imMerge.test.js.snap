@@ -1,0 +1,188 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`imMerge when merge data with source --> then return new deeply merged object 1`] = `
+Object {
+  "a": Object {
+    "b": Object {
+      "c": 2,
+      "d": 2,
+      "dd": 3,
+    },
+    "e": Object {
+      "f": "3",
+    },
+    "ee": Object {
+      "f": "4",
+    },
+  },
+}
+`;
+
+exports[`imMerge-array when merge array with insertFirstType --> then return new array with inserted object 1`] = `
+Object {
+  "t": Array [
+    Object {
+      "x": 4,
+    },
+    Object {
+      "x": 1,
+    },
+    Object {
+      "x": 2,
+    },
+    Object {
+      "x": 3,
+    },
+  ],
+}
+`;
+
+exports[`imMerge-array when merge array with insertLastType --> then return new array with inserted object 1`] = `
+Object {
+  "t": Array [
+    Object {
+      "x": 1,
+    },
+    Object {
+      "x": 2,
+    },
+    Object {
+      "x": 3,
+    },
+    Object {
+      "x": 4,
+    },
+  ],
+}
+`;
+
+exports[`imMerge-array when merge array with insertType and index --> then return new array with inserted object 1`] = `
+Object {
+  "a": Object {
+    "b": Object {
+      "c": 2,
+    },
+    "t": Array [
+      Object {
+        "x": 1,
+      },
+      Object {
+        "x": 3,
+      },
+      Object {
+        "x": 2,
+      },
+    ],
+  },
+}
+`;
+
+exports[`imMerge-array when merge array with insertType source array --> then default index is 0 and return new array with inserted object 1`] = `
+Object {
+  "a": Object {
+    "b": Object {
+      "c": 2,
+    },
+    "t": Array [
+      Object {
+        "x": 3,
+      },
+      Object {
+        "x": 1,
+      },
+      Object {
+        "x": 2,
+      },
+    ],
+  },
+}
+`;
+
+exports[`imMerge-array when merge array with insertType, index, default flatten --> then return new array with inserted objects 1`] = `
+Object {
+  "a": Object {
+    "b": Object {
+      "c": 2,
+    },
+    "t": Array [
+      Object {
+        "x": 1,
+      },
+      Object {
+        "x": 3,
+      },
+      Object {
+        "x": 4,
+      },
+      Object {
+        "x": 2,
+      },
+    ],
+  },
+}
+`;
+
+exports[`imMerge-array when merge array with insertType, index, flatten=false --> then return new array with inserted objects 1`] = `
+Object {
+  "a": Object {
+    "b": Object {
+      "c": 2,
+    },
+    "t": Array [
+      Object {
+        "x": 1,
+      },
+      Array [
+        Object {
+          "x": 3,
+        },
+        Object {
+          "x": 4,
+        },
+      ],
+      Object {
+        "x": 2,
+      },
+    ],
+  },
+}
+`;
+
+exports[`imMerge-array when merge array with removeFirstType --> then return new array with object removed 1`] = `
+Object {
+  "t": Array [
+    Object {
+      "x": 2,
+    },
+    Object {
+      "x": 3,
+    },
+  ],
+}
+`;
+
+exports[`imMerge-array when merge array with removeLastType --> then return new array with object removed 1`] = `
+Object {
+  "t": Array [
+    Object {
+      "x": 1,
+    },
+    Object {
+      "x": 2,
+    },
+  ],
+}
+`;
+
+exports[`imMerge-array when merge array with removeType --> then return new array with object removed 1`] = `
+Object {
+  "t": Array [
+    Object {
+      "x": 1,
+    },
+    Object {
+      "x": 3,
+    },
+  ],
+}
+`;
