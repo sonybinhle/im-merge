@@ -1,5 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`imMerge when merge data source array --> then default behavior is appended 1`] = `
+Object {
+  "a": Object {
+    "b": Object {
+      "c": 2,
+      "d": 2,
+    },
+    "e": Array [
+      Object {
+        "x": 1,
+      },
+      Object {
+        "x": 2,
+      },
+      Object {
+        "x": 3,
+      },
+    ],
+  },
+}
+`;
+
 exports[`imMerge when merge data with source --> then return new deeply merged object 1`] = `
 Object {
   "a": Object {

@@ -61,6 +61,34 @@ describe('imMerge', () => {
     expect(mergedObj.d).toBe(source.d);
     expect(mergedObj.d).not.toBe(data.d);
   });
+
+  it('when merge data source array --> then default behavior is appended', () => {
+    // given
+    const data = { a: { b: { c: 1, d: 2 }, e: [{ x: 1 }, { x: 2 }] } };
+    const source = { a: { b: { c: 2 }, e: [{ x: 3 }] } };
+
+    // when
+    const mergedObj = imMerge(data, source);
+
+    // then
+    expect(mergedObj).toMatchSnapshot();
+    expect(mergedObj.a.e[0]).toBe(data.a.e[0]);
+    expect(mergedObj.a.e[1]).toBe(data.a.e[1]);
+    expect(mergedObj.a.e[2]).toBe(source.a.e[0]);
+  });
+
+  it('when source is a empty array --> then return original data', () => {
+    // given
+    const data = { a: { b: { c: 1, d: 2 }, e: [{ x: 1 }, { x: 2 }] } };
+    const source = { a: { b: { c: 2 }, e: [] } };
+
+    // when
+    const mergedObj = imMerge(data, source);
+
+    // then
+    expect(mergedObj.a.e).toBe(data.a.e);
+    expect(mergedObj.a.e.length).toBe(2);
+  });
 });
 
 describe('imMerge-array', () => {
