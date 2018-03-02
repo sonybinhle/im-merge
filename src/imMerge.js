@@ -1,6 +1,4 @@
-const isObject = o => o !== null && typeof o === 'object';
-
-const isEmpty = o => Object.keys(o).length === 0;
+import { isObject, isEmpty } from './utils';
 
 const IM_MERGE_TYPE_KEY = '__IM_MERGE_TYPE__';
 
@@ -51,33 +49,37 @@ export const removeLastType = (flatten) => ({
   flatten
 });
 
+const mergeArrayType = (data, source) => {
+  const {
+    [IM_MERGE_TYPE_KEY]: type,
+    data: sourceData,
+    index = 0,
+    flatten = true
+  } = source;
+
+  const arraySourceData = Array.isArray(sourceData)
+    ? (flatten ? sourceData : [ sourceData ])
+    : [ sourceData ];
+
+  switch (type) {
+    case MERGE_TYPES.INSERT:
+      return [...data.slice(0, index), ...arraySourceData, ...data.slice(index)];
+    case MERGE_TYPES.INSERT_FIRST:
+      return [...arraySourceData, ...data];
+    case MERGE_TYPES.INSERT_LAST:
+      return [...data, ...arraySourceData];
+    case MERGE_TYPES.REMOVE:
+      return [...data.slice(0, index), ...data.slice(index + 1)];
+    case MERGE_TYPES.REMOVE_FIRST:
+      return data.slice(1);
+    case MERGE_TYPES.REMOVE_LAST:
+      return data.slice(0, data.length - 1);
+  }
+};
+
 const imMerge = (data, source) => {
   if (Array.isArray(data) && isObject(source) && source[IM_MERGE_TYPE_KEY]) {
-    const {
-      [IM_MERGE_TYPE_KEY]: type,
-      data: sourceData,
-      index = 0,
-      flatten = true
-    } = source;
-
-    const arraySourceData = Array.isArray(sourceData)
-      ? (flatten ? sourceData : [ sourceData ])
-      : [ sourceData ];
-
-    switch (type) {
-      case MERGE_TYPES.INSERT:
-        return [...data.slice(0, index), ...arraySourceData, ...data.slice(index)];
-      case MERGE_TYPES.INSERT_FIRST:
-        return [...arraySourceData, ...data];
-      case MERGE_TYPES.INSERT_LAST:
-        return [...data, ...arraySourceData];
-      case MERGE_TYPES.REMOVE:
-        return [...data.slice(0, index), ...data.slice(index + 1)];
-      case MERGE_TYPES.REMOVE_FIRST:
-        return data.slice(1);
-      case MERGE_TYPES.REMOVE_LAST:
-        return data.slice(0, data.length - 1);
-    }
+    return mergeArrayType(data, source);
   }
   if (Array.isArray(data) && Array.isArray(source)) {
     if (!source.length) return data;
