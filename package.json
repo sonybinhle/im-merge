@@ -15,7 +15,8 @@
     "prepush": "npm run test:cov",
     "prepublishOnly": "npm run test:cov && npm run build",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "lint": "eslint --fix src"
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
