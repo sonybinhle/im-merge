@@ -13,10 +13,9 @@
     "test:u": "NODE_ENV=test jest --u",
     "test:cov": "rimraf ./coverage && npm run test -- --coverage",
     "prepush": "npm run test:cov",
+    "prepublishOnly": "npm run test:cov",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "lint": "eslint --fix src",
-    "prepublishOnly": "npm run test:cov",
-    "prerelease": "npm run prepublishOnly",
     "release": "npm run build && np"
   },
   "devDependencies": {
