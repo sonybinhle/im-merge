@@ -2,9 +2,12 @@ import imMerge, {
   insertType,
   insertFisrtType,
   insertLastType,
+  insertBeforeMatchType,
+  insertAfterMatchType,
   removeType,
   removeFirstType,
-  removeLastType
+  removeLastType,
+  removeMatchType
 } from './imMerge';
 
 describe('imMerge', () => {
@@ -187,6 +190,51 @@ describe('imMerge-array', () => {
     expect(mergedObj.t[3]).toBe(insertedData);
   });
 
+  it('when merge array with insertBeforeMatchType --> then return new array with inserted object', () => {
+    // given
+    const data = { t: [{ x: 1 }, { x: 2 }, { x: 3 }] };
+    const insertedData = [{ x: 4 }, { x: 5 }];
+    const source = { t: insertBeforeMatchType({ x: 2 }, insertedData) };
+
+    // when
+    const mergedObj = imMerge(data, source);
+
+    // then
+    expect(mergedObj).toMatchSnapshot();
+    expect(mergedObj.t).toHaveLength(5);
+    expect(mergedObj.t[3]).toBe(data.t[1]);
+    expect(mergedObj.t[1]).toBe(insertedData[0]);
+  });
+
+  it('when merge array with insertAfterMatchType --> then return new array with inserted object', () => {
+    // given
+    const data = { t: [{ x: 1 }, { x: 2 }, { x: 3 }] };
+    const insertedData = [{ x: 4 }, { x: 5 }];
+    const source = { t: insertAfterMatchType({ x: 2 }, insertedData) };
+
+    // when
+    const mergedObj = imMerge(data, source);
+
+    // then
+    expect(mergedObj).toMatchSnapshot();
+    expect(mergedObj.t).toHaveLength(5);
+    expect(mergedObj.t[4]).toBe(data.t[2]);
+    expect(mergedObj.t[2]).toBe(insertedData[0]);
+  });
+
+  it('when merge array with insertAfterMatchType and there is no matched items --> then return original object', () => {
+    // given
+    const data = { t: [{ x: 1 }, { x: 2 }, { x: 3 }] };
+    const insertedData = { x: 4 };
+    const source = { t: insertAfterMatchType({ x: 5 }, insertedData) };
+
+    // when
+    const mergedObj = imMerge(data, source);
+
+    // then
+    expect(mergedObj.t).toBe(data.t);
+  });
+
   it('when merge array with removeType --> then return new array with object removed', () => {
     // given
     const data = { t: [{ x: 1 }, { x: 2 }, { x: 3 }] };
@@ -228,5 +276,20 @@ describe('imMerge-array', () => {
     expect(mergedObj.t[0]).toBe(data.t[0]);
     expect(mergedObj.t[1]).toBe(data.t[1]);
     expect(mergedObj.t[3]).toBe(undefined);
+  });
+
+  it('when merge array with removeMatchType --> then return new array with object removed', () => {
+    // given
+    const data = { t: [{ x: 1 }, { x: 2, y: 1 }, { x: 3 }] };
+    const source = { t: removeMatchType({ y: 1 }) };
+
+    // when
+    const mergedObj = imMerge(data, source);
+
+    // then
+    expect(mergedObj).toMatchSnapshot();
+    expect(mergedObj.t).toHaveLength(2);
+    expect(mergedObj.t[0]).toBe(data.t[0]);
+    expect(mergedObj.t[1]).toBe(data.t[2]);
   });
 });

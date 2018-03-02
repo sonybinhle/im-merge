@@ -40,6 +40,50 @@ Object {
 }
 `;
 
+exports[`imMerge-array when merge array with insertAfterMatchType --> then return new array with inserted object 1`] = `
+Object {
+  "t": Array [
+    Object {
+      "x": 1,
+    },
+    Object {
+      "x": 2,
+    },
+    Object {
+      "x": 4,
+    },
+    Object {
+      "x": 5,
+    },
+    Object {
+      "x": 3,
+    },
+  ],
+}
+`;
+
+exports[`imMerge-array when merge array with insertBeforeMatchType --> then return new array with inserted object 1`] = `
+Object {
+  "t": Array [
+    Object {
+      "x": 1,
+    },
+    Object {
+      "x": 4,
+    },
+    Object {
+      "x": 5,
+    },
+    Object {
+      "x": 2,
+    },
+    Object {
+      "x": 3,
+    },
+  ],
+}
+`;
+
 exports[`imMerge-array when merge array with insertFirstType --> then return new array with inserted object 1`] = `
 Object {
   "t": Array [
@@ -191,6 +235,19 @@ Object {
     },
     Object {
       "x": 2,
+    },
+  ],
+}
+`;
+
+exports[`imMerge-array when merge array with removeMatchType --> then return new array with object removed 1`] = `
+Object {
+  "t": Array [
+    Object {
+      "x": 1,
+    },
+    Object {
+      "x": 3,
     },
   ],
 }

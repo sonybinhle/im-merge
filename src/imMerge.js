@@ -1,4 +1,4 @@
-import { isObject, isEmpty } from './utils';
+import {isObject, isEmpty, isMatch} from './utils';
 
 const IM_MERGE_TYPE_KEY = '__IM_MERGE_TYPE__';
 
@@ -6,12 +6,12 @@ const MERGE_TYPES = {
   INSERT: 'INSERT',
   INSERT_FIRST: 'INSERT_FIRST',
   INSERT_LAST: 'INSERT_LAST',
-  // INSERT_AFTER_MATCH: 'INSERT_AFTER_MATCH',
-  // INSERT_BEFORE_MATCH: 'INSERT_BEFORE_MATCH',
+  INSERT_BEFORE_MATCH: 'INSERT_BEFORE_MATCH',
+  INSERT_AFTER_MATCH: 'INSERT_AFTER_MATCH',
   REMOVE: 'REMOVE',
   REMOVE_FIRST: 'REMOVE_FIST',
-  REMOVE_LAST: 'REMOVE_LAST'
-  // REMOVE_MATCH: 'REMOVE_MATCH'
+  REMOVE_LAST: 'REMOVE_LAST',
+  REMOVE_MATCH: 'REMOVE_MATCH'
 };
 
 export const insertType = (data, index, flatten) => ({
@@ -33,26 +33,43 @@ export const insertLastType = (data, flatten) => ({
   flatten
 });
 
-export const removeType = (index, flatten) => ({
+export const insertBeforeMatchType = (match, data, flatten) => ({
+  [IM_MERGE_TYPE_KEY]: MERGE_TYPES.INSERT_BEFORE_MATCH,
+  match,
+  data,
+  flatten
+});
+
+export const insertAfterMatchType = (match, data, flatten) => ({
+  [IM_MERGE_TYPE_KEY]: MERGE_TYPES.INSERT_AFTER_MATCH,
+  match,
+  data,
+  flatten
+});
+
+export const removeType = (index) => ({
   [IM_MERGE_TYPE_KEY]: MERGE_TYPES.REMOVE,
-  index,
-  flatten
+  index
 });
 
-export const removeFirstType = (flatten) => ({
-  [IM_MERGE_TYPE_KEY]: MERGE_TYPES.REMOVE_FIRST,
-  flatten
+export const removeFirstType = () => ({
+  [IM_MERGE_TYPE_KEY]: MERGE_TYPES.REMOVE_FIRST
 });
 
-export const removeLastType = (flatten) => ({
-  [IM_MERGE_TYPE_KEY]: MERGE_TYPES.REMOVE_LAST,
-  flatten
+export const removeLastType = () => ({
+  [IM_MERGE_TYPE_KEY]: MERGE_TYPES.REMOVE_LAST
+});
+
+export const removeMatchType = (match) => ({
+  [IM_MERGE_TYPE_KEY]: MERGE_TYPES.REMOVE_MATCH,
+  match
 });
 
 const mergeArrayType = (data, source) => {
   const {
     [IM_MERGE_TYPE_KEY]: type,
     data: sourceData,
+    match,
     index = 0,
     flatten = true
   } = source;
@@ -68,12 +85,22 @@ const mergeArrayType = (data, source) => {
       return [...arraySourceData, ...data];
     case MERGE_TYPES.INSERT_LAST:
       return [...data, ...arraySourceData];
+    case MERGE_TYPES.INSERT_BEFORE_MATCH:
+    case MERGE_TYPES.INSERT_AFTER_MATCH:
+      const matchedIndex = data.findIndex(item => isMatch(item, match));
+      if (matchedIndex === -1) return data;
+      const insertedIndex = type === MERGE_TYPES.INSERT_BEFORE_MATCH ? matchedIndex : matchedIndex + 1;
+      return [...data.slice(0, insertedIndex), ...arraySourceData, ...data.slice(insertedIndex)];
     case MERGE_TYPES.REMOVE:
       return [...data.slice(0, index), ...data.slice(index + 1)];
     case MERGE_TYPES.REMOVE_FIRST:
       return data.slice(1);
     case MERGE_TYPES.REMOVE_LAST:
       return data.slice(0, data.length - 1);
+    case MERGE_TYPES.REMOVE_MATCH:
+      return data.filter(item => !isMatch(item, match));
+    default:
+      return data;
   }
 };
 
