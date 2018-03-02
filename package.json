@@ -2,20 +2,25 @@
   "name": "im-merge",
   "version": "0.0.1",
   "description": "The immutable merge util",
-  "main": "src/imMerge.js",
+  "main": "build/imMerge.js",
   "repository": "https://github.com/sonybinhle/im-merge.git",
   "author": "Binh Le <sonybinhle@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "build": "npm run clean && babel src -d build --ignore test.js --source-maps inline",
+    "clean": "rimraf ./build",
     "test": "NODE_ENV=test jest",
     "test:u": "NODE_ENV=test jest --u",
     "test:cov": "rimraf ./coverage && npm run test -- --coverage",
     "prepush": "npm run test:cov",
-    "prepublishOnly": "npm run test:cov",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "lint": "eslint --fix src"
+    "lint": "eslint --fix src",
+    "prepublishOnly": "npm run test:cov",
+    "prerelease": "npm run prepublishOnly",
+    "release": "npm run build && np"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-0": "^6.24.1",
     "coveralls": "^3.0.0",
@@ -27,7 +32,8 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
     "husky": "^0.14.3",
-    "jest": "^22.1.4"
+    "jest": "^22.1.4",
+    "np": "^2.20.1"
   },
   "jest": {
     "transform": {
