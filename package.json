@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "build": "npm run clean && babel src -d build --ignore test.js --source-maps inline",
-    "clean": "rimraf ./build",
+    "clean": "rm -rf build",
     "test": "NODE_ENV=test jest",
     "test:u": "NODE_ENV=test jest --u",
     "test:cov": "rimraf ./coverage && npm run test -- --coverage",
@@ -32,8 +32,7 @@
     "eslint-plugin-standard": "^3.0.1",
     "husky": "^0.14.3",
     "jest": "^22.1.4",
-    "np": "^2.20.1",
-    "rimraf": "^2.6.2"
+    "np": "^2.20.1"
   },
   "jest": {
     "transform": {
