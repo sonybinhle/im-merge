@@ -79,24 +79,47 @@ npm i im-merge
 <strong>ES6</strong>
 
 ```jsx harmony
-import imMerge from 'im-merge';
+import imMerge, { insertType } from 'im-merge';
 
-const data = {x : { y : { z: 3, k: 7 } } };
-const source = {x : { y : { z: 4 }, t: { q : 6 } } };
+const data = {x : { y : { z: 3, k: 7 } }, items: [{}, 2, 3, 4] };
+const source = {x : { y : { z: 4 }, t: { q : 6 } }, items: insertType(5, 1) };
 
 const result = imMerge(data, source);
 
 console.log(result);
 /*
-{x : { y : { z: 4, k: 7 }, t: { q : 6 } } };
+{x : { y : { z: 4, k: 7 }, t: { q : 6 } }, items: [{}, 5, 2, 3, 4] };
 */
+console.log(source.t === result.t); // true
+console.log(source.items[0] === result.items[0]); // true -> object reference kept
 console.log(source.t === result.t); // true
 ```
 
 ## Api:
 
-TBD
+* `func imMerge(data: any, source: any) => any` return a **immutable** value/object by **recursively** merging data and source.
 
-## Static functions
+  + if data and source are **different** in type(object vs array, ...) then return source.
+  + if data and source are **the same** in type(array/array, object/object, primitive/primitive) then do the merge.
+  + if (array/array) case: the default behavior is returning the **concatenate array**, in order to handle more complex user case, we could use helpers **modification types**(insertType, insertFisrtType, insertLastType, insertBeforeMatchType, insertAfterMatchType, removeType, removeFirstType, removeLastType, removeMatchType);
 
-TBD
+* Array modification types:
+```
+func insertType(data, index = 0, flatten = true) => object
+
+func insertFisrtType(data, flatten = true) => object
+
+func insertLastType(data, flatten = true) => object
+
+func insertBeforeMatchType(match, data, flatten = true) => object
+
+func insertAfterMatchType(match, data, flatten = true) => object
+
+func removeType(index = 0) => object
+
+func removeFirstType() => object
+
+func removeLastType() => object
+
+func removeMatchType(match) => object
+```
