@@ -21,8 +21,52 @@ The utility for immutable merging objects which actions helps.
 
 ## Why im-merge?
 
-TBD
+When using Redux, the good practice is always return a new object from state rather than mutate the existing one because of the shallow comparing. It helps avoid redundant component's re-rendering. 
 
+The usual patterns that I observe when developers using Redux it.
+
+```jsx harmony
+const reducer = (state, { type, payload }) => {
+  switch (type) {
+    case 'INIT':
+      return payload;
+    case 'ADD_ITEM':
+      return { ...state, items: [...state.items, payload] };
+    case 'CHANGE_TITLE':
+      return { ...state, title: payload };
+    case 'CHANGE_NAME':
+      return { ...state, name: payload };
+    default:
+      return state;
+  } 
+};
+```
+There is two problems with the above implementation:
+
+* It looks the same and repetitive for many reducers, the main purpose is still merging objects in the immutable manner. 
+* Deeply nested object update with be even harder.
+
+We could rewrite it as:
+
+```jsx harmony
+import imMerge from 'im-merge';
+/*
+* payload could be:
+* { title: 'new title' }
+* { name: 'new name' }
+* { items: ['new item'] }
+* */
+const reducer = (state, { type, payload }) => {
+  switch (type) {
+    case 'INIT':
+      return payload;
+    case 'CHANGE':
+      return imMerge(state, payload);
+    default:
+      return state;
+  } 
+};
+```
 
 ## Install:
 
