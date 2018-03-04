@@ -15,7 +15,7 @@
 
 </div>
 
-# im-merge v0.1.1
+# im-merge v1.0.0
 
 The utility for immutable merging objects which actions helps.
 
@@ -97,29 +97,38 @@ console.log(source.t === result.t); // true
 
 ## Api:
 
+**Main function:**
 * `func imMerge(data: any, source: any) => any` return a **immutable** value/object by **recursively** merging data and source.
 
   + if data and source are **different** in type(object vs array, ...) then return source.
   + if data and source are **the same** in type(array/array, object/object, primitive/primitive) then do the merge.
   + if (array/array) case: the default behavior is returning the **concatenate array**, in order to handle more complex user case, we could use helpers **modification types**(insertType, insertFisrtType, insertLastType, insertBeforeMatchType, insertAfterMatchType, removeType, removeFirstType, removeLastType, removeMatchType);
 
-* Array modification types:
+**Array modification types:**
+* `func insertType(data, index = 0, flatten = true) => object` return immutable array with inserted item at given index.
+```jsx harmony
+import imMerge, { insertType } from 'im-merge';
+
+const data = { items: [{x: 1}, {x: 2}, {x: 3}] };
+const source = { items: insertType([{x: 4}, {x: 5}], 1) };
+
+const result = imMerge(data, source);
+// { items: [{x: 1}, {x: 4}, {x: 5}, {x: 2}, {x: 3}] }
 ```
-func insertType(data, index = 0, flatten = true) => object
+* `func insertFisrtType(data, flatten = true) => object` instruction for inserting new item at the beginning of the array
+* `func insertLastType(data, flatten = true) => object` instruction for inserting new item at the end of the array
+* `func insertBeforeMatchType(match, data, flatten = true) => object` instruction for inserting new item before the index of matched item(deep contain match) in the array
+```jsx harmony
+import imMerge, { insertBeforeMatchType } from 'im-merge';
 
-func insertFisrtType(data, flatten = true) => object
+const data = { items: [{x: 1}, {x: 2, y: {z: 3}}, {x: 3, y: {z: 4}}] };
+const source = { items: insertBeforeMatchType([{x: 4}, {x: 5}], {y : {z: 3}}) };
 
-func insertLastType(data, flatten = true) => object
-
-func insertBeforeMatchType(match, data, flatten = true) => object
-
-func insertAfterMatchType(match, data, flatten = true) => object
-
-func removeType(index = 0) => object
-
-func removeFirstType() => object
-
-func removeLastType() => object
-
-func removeMatchType(match) => object
+const result = imMerge(data, source);
+// { items: [{x: 1}, {x: 4}, {x: 5}, {x: 2, y: {z: 3}}, {x: 3, y: {z: 4}}] }
 ```
+* `func insertAfterMatchType(match, data, flatten = true) => object` instruction for inserting new item after the index of matched item(deep contain match) in the array
+* `func removeType(index = 0) => object` instruction for removing item at the index in the array
+* `func removeFirstType() => object` instruction for removing item at the first index in the array
+* `func removeLastType() => object` instruction for removing item at the last index in the array
+* `func removeMatchType(match) => object` instruction for removing item at the matched index in the array
