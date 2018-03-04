@@ -33,17 +33,17 @@ export const insertLastType = (data, flatten) => ({
   flatten
 });
 
-export const insertBeforeMatchType = (match, data, flatten) => ({
+export const insertBeforeMatchType = (data, match, flatten) => ({
   [IM_MERGE_TYPE_KEY]: MERGE_TYPES.INSERT_BEFORE_MATCH,
-  match,
   data,
+  match,
   flatten
 });
 
-export const insertAfterMatchType = (match, data, flatten) => ({
+export const insertAfterMatchType = (data, match, flatten) => ({
   [IM_MERGE_TYPE_KEY]: MERGE_TYPES.INSERT_AFTER_MATCH,
-  match,
   data,
+  match,
   flatten
 });
 

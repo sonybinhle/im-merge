@@ -194,7 +194,7 @@ describe('imMerge-array', () => {
     // given
     const data = { t: [{ x: 1 }, { x: 2 }, { x: 3 }] };
     const insertedData = [{ x: 4 }, { x: 5 }];
-    const source = { t: insertBeforeMatchType({ x: 2 }, insertedData) };
+    const source = { t: insertBeforeMatchType(insertedData, { x: 2 }) };
 
     // when
     const mergedObj = imMerge(data, source);
@@ -210,7 +210,7 @@ describe('imMerge-array', () => {
     // given
     const data = { t: [{ x: 1 }, { x: 2 }, { x: 3 }] };
     const insertedData = [{ x: 4 }, { x: 5 }];
-    const source = { t: insertAfterMatchType({ x: 2 }, insertedData) };
+    const source = { t: insertAfterMatchType(insertedData, { x: 2 }) };
 
     // when
     const mergedObj = imMerge(data, source);
@@ -226,7 +226,7 @@ describe('imMerge-array', () => {
     // given
     const data = { t: [{ x: 1 }, { x: 2 }, { x: 3 }] };
     const insertedData = { x: 4 };
-    const source = { t: insertAfterMatchType({ x: 5 }, insertedData) };
+    const source = { t: insertAfterMatchType(insertedData, { x: 5 }) };
 
     // when
     const mergedObj = imMerge(data, source);
