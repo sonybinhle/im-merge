@@ -21,9 +21,9 @@ The utility for immutable merging objects which actions helps.
 
 ## Why im-merge?
 
-When using Redux, the good practice is always return a new object from state rather than mutate the existing one because of the shallow comparing. It helps avoid redundant component's re-rendering. 
+When using Redux, the good practice is always return a new object from state rather than mutate the existing one because of the shallow comparing. It helps avoid redundant components's re-rendering. 
 
-The usual patterns that I observe when developers using Redux it.
+The usual patterns that I observed when developers using Redux is:
 
 ```jsx harmony
 const reducer = (state, { type, payload }) => {
