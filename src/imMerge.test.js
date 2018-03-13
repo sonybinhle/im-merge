@@ -1,4 +1,5 @@
 import imMerge, {
+  mergeType,
   insertType,
   insertFisrtType,
   insertLastType,
@@ -95,6 +96,21 @@ describe('imMerge', () => {
 });
 
 describe('imMerge-array', () => {
+  it('when merge array with mergeType source array --> then deeply merge array items', () => {
+    // given
+    const data = { a: { b: [{ x: 1, z: {} }, { x: 2 }] } };
+    const insertedData = [{ y: 1 }, { y: {} }];
+    const source = { a: { b: mergeType(insertedData) } };
+
+    // when
+    const mergedObj = imMerge(data, source);
+
+    // then
+    expect(mergedObj).toMatchSnapshot();
+    expect(mergedObj.a.b[0].z).toBe(data.a.b[0].z);
+    expect(mergedObj.a.b[1].y).toBe(insertedData[1].y);
+  });
+
   it('when merge array with insertType source array --> then default index is 0 and return new array with inserted object', () => {
     // given
     const data = { a: { b: {}, t: [{ x: 1 }, { x: 2 }] } };

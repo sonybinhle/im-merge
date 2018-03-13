@@ -214,6 +214,24 @@ Object {
 }
 `;
 
+exports[`imMerge-array when merge array with mergeType source array --> then deeply merge array items 1`] = `
+Object {
+  "a": Object {
+    "b": Array [
+      Object {
+        "x": 1,
+        "y": 1,
+        "z": Object {},
+      },
+      Object {
+        "x": 2,
+        "y": Object {},
+      },
+    ],
+  },
+}
+`;
+
 exports[`imMerge-array when merge array with removeFirstType --> then return new array with object removed 1`] = `
 Object {
   "t": Array [

@@ -3,6 +3,7 @@ import {isObject, isEmpty, isMatch} from './utils';
 const IM_MERGE_TYPE_KEY = '__IM_MERGE_TYPE__';
 
 const MERGE_TYPES = {
+  MERGE: 'MERGE',
   INSERT: 'INSERT',
   INSERT_FIRST: 'INSERT_FIRST',
   INSERT_LAST: 'INSERT_LAST',
@@ -13,6 +14,11 @@ const MERGE_TYPES = {
   REMOVE_LAST: 'REMOVE_LAST',
   REMOVE_MATCH: 'REMOVE_MATCH'
 };
+
+export const mergeType = (data) => ({
+  [IM_MERGE_TYPE_KEY]: MERGE_TYPES.MERGE,
+  data,
+});
 
 export const insertType = (data, index, flatten) => ({
   [IM_MERGE_TYPE_KEY]: MERGE_TYPES.INSERT,
@@ -79,6 +85,8 @@ const mergeArrayType = (data, source) => {
     : [ sourceData ];
 
   switch (type) {
+    case MERGE_TYPES.MERGE:
+      return data.map((item, index) => imMerge(item, sourceData[index]));
     case MERGE_TYPES.INSERT:
       return [...data.slice(0, index), ...arraySourceData, ...data.slice(index)];
     case MERGE_TYPES.INSERT_FIRST:
