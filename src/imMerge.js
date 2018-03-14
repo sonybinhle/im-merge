@@ -17,7 +17,7 @@ const MERGE_TYPES = {
 
 export const mergeType = (data) => ({
   [IM_MERGE_TYPE_KEY]: MERGE_TYPES.MERGE,
-  data,
+  data
 });
 
 export const insertType = (data, index, flatten) => ({
