@@ -15,7 +15,7 @@
 
 </div>
 
-# im-merge v1.0.1
+# im-merge v1.0.2
 
 The utility for immutable merging objects which actions helps.
 
