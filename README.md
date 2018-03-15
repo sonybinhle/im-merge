@@ -105,6 +105,16 @@ console.log(source.t === result.t); // true
   + if (array/array) case: the default behavior is returning the **concatenate array**, in order to handle more complex user case, we could use helpers **modification types**(insertType, insertFisrtType, insertLastType, insertBeforeMatchType, insertAfterMatchType, removeType, removeFirstType, removeLastType, removeMatchType);
 
 **Array modification types:**
+* `func mergeType(data) => object` return immutable array with deeply merged items.
+```jsx harmony
+import imMerge, { insertType } from 'im-merge';
+
+const data = { items: [{x: 1}, {x: 2}, {x: 3}] };
+const source = { items: mergeType([{y: 1}, {y: 2}]) };
+
+const result = imMerge(data, source);
+// { items: [{x: 1, y: 1}, {x: 2, y: 2}, {x: 3}] }
+```
 * `func insertType(data, index = 0, flatten = true) => object` return immutable array with inserted item at given index.
 ```jsx harmony
 import imMerge, { insertType } from 'im-merge';
