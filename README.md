@@ -98,14 +98,18 @@ console.log(source.t === result.t); // true
 ## Api:
 
 **Main function:**
-* `func imMerge(data: any, source: any) => any` return a **immutable** value/object by **recursively** merging data and source.
+* <strong>func imMerge(data: any, source: any) => any</strong> 
+
+  return a **immutable** value/object by **recursively** merging data and source.
 
   + if data and source are **different** in type(object vs array, ...) then return source.
   + if data and source are **the same** in type(array/array, object/object, primitive/primitive) then do the merge.
   + if (array/array) case: the default behavior is returning the **concatenate array**, in order to handle more complex user case, we could use helpers **modification types**(insertType, insertFisrtType, insertLastType, insertBeforeMatchType, insertAfterMatchType, removeType, removeFirstType, removeLastType, removeMatchType);
 
 **Array modification types:**
-* `func mergeType(data) => object` return immutable array with deeply merged items.
+* <strong>func mergeType(data) => object</strong>  
+  
+  return immutable array with deeply merged items.
 ```jsx harmony
 import imMerge, { insertType } from 'im-merge';
 
@@ -115,7 +119,9 @@ const source = { items: mergeType([{y: 1}, {y: 2}]) };
 const result = imMerge(data, source);
 // { items: [{x: 1, y: 1}, {x: 2, y: 2}, {x: 3}] }
 ```
-* `func insertType(data, index = 0, flatten = true) => object` return immutable array with inserted item at given index.
+* <strong>func insertType(data, index = 0, flatten = true) => object</strong>
+  
+  return immutable array with inserted item at given index.
 ```jsx harmony
 import imMerge, { insertType } from 'im-merge';
 
@@ -125,9 +131,15 @@ const source = { items: insertType([{x: 4}, {x: 5}], 1) };
 const result = imMerge(data, source);
 // { items: [{x: 1}, {x: 4}, {x: 5}, {x: 2}, {x: 3}] }
 ```
-* `func insertFisrtType(data, flatten = true) => object` instruction for inserting new item at the beginning of the array
-* `func insertLastType(data, flatten = true) => object` instruction for inserting new item at the end of the array
-* `func insertBeforeMatchType(match, data, flatten = true) => object` instruction for inserting new item before the index of matched item(deep contain match) in the array
+* <strong>func insertFisrtType(data, flatten = true) => object</strong> 
+
+  instruction for inserting new item at the beginning of the array
+* <strong>func insertLastType(data, flatten = true) => object</strong> 
+
+  instruction for inserting new item at the end of the array
+* <strong>func insertBeforeMatchType(match, data, flatten = true) => object</strong> 
+
+  instruction for inserting new item before the index of matched item(deep contain match) in the array
 ```jsx harmony
 import imMerge, { insertBeforeMatchType } from 'im-merge';
 
@@ -137,8 +149,18 @@ const source = { items: insertBeforeMatchType([{x: 4}, {x: 5}], {y : {z: 3}}) };
 const result = imMerge(data, source);
 // { items: [{x: 1}, {x: 4}, {x: 5}, {x: 2, y: {z: 3}}, {x: 3, y: {z: 4}}] }
 ```
-* `func insertAfterMatchType(match, data, flatten = true) => object` instruction for inserting new item after the index of matched item(deep contain match) in the array
-* `func removeType(index = 0) => object` instruction for removing item at the index in the array
-* `func removeFirstType() => object` instruction for removing item at the first index in the array
-* `func removeLastType() => object` instruction for removing item at the last index in the array
-* `func removeMatchType(match) => object` instruction for removing item at the matched index in the array
+* <strong>func insertAfterMatchType(match, data, flatten = true) => object</strong> 
+
+  instruction for inserting new item after the index of matched item(deep contain match) in the array
+* <strong>func removeType(index = 0) => object</strong> 
+ 
+   instruction for removing item at the index in the array
+* <strong>func removeFirstType() => object</strong> 
+
+  instruction for removing item at the first index in the array
+* <strong>func removeLastType() => object</strong> 
+ 
+   instruction for removing item at the last index in the array
+* <strong>func removeMatchType(match) => object</strong>
+ 
+   instruction for removing item at the matched index in the array
