@@ -6,6 +6,13 @@
   "repository": "https://github.com/sonybinhle/im-merge.git",
   "author": "Binh Le <sonybinhle@gmail.com>",
   "license": "MIT",
+  "keywords": [
+    "redux",
+    "immutable",
+    "merge",
+    "merge-object",
+    "deep-merge"
+  ],
   "scripts": {
     "build": "npm run clean && babel src -d build --ignore test.js --source-maps inline",
     "clean": "rm -rf build",
