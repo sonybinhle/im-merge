@@ -17,7 +17,7 @@
 
 # im-merge v1.0.2
 
-The utility for immutable merging objects which actions helps.
+The utility for immutable merging objects with actions helps.
 
 ## Why im-merge?
 
