@@ -44,7 +44,7 @@ const reducer = (state, { type, payload }) => {
 There is two problems with the above implementation:
 
 * It looks the same and repetitive for many reducers, the main purpose is still merging objects in the immutable manner. 
-* Deeply nested object update with be even harder.
+* Deeply nested object update will be even harder.
 
 We could rewrite it as:
 
